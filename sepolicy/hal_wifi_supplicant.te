@@ -1,0 +1,2 @@
+allow hal_wifi_supplicant wifi_data_file:dir create_dir_perms;
+allow hal_wifi_supplicant wifi_data_file:file create_file_perms;

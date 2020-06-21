@@ -1,0 +1,43 @@
+allow init diag_device:chr_file unlink;
+allow init tmpfs:lnk_file create_file_perms;
+allow init userdata_block_device:blk_file rw_file_perms;
+allow init cache_block_device:blk_file rw_file_perms;
+
+allow init self: netlink_generic_socket {read write};
+
+# init chmod/chown access to /sys files
+allow init {
+    sysfs_adsp
+    sysfs_bluetooth_writable
+    sysfs_graphics
+    sysfs_hsic_modem_wait
+    sysfs_mmi_touch
+    sysfs_usb
+    sysfs_wlan_fwpath
+}:file setattr;
+
+allow init {
+    sysfs_wlan_fwpath
+}:file w_file_perms;
+
+allow init {
+    sysfs_block_iosched
+    sysfs_devices_system_cpu
+    sysfs_kgsl
+    sysfs_msm_power
+    sysfs_rmnet
+    sysfs_ssr_recovery
+    sysfs_ssr_toggle
+    sysfs_thermal
+    sysfs_usb_controller
+    sysfs_xhci_msm_hsic
+}:file w_file_perms;
+
+allow init sysfs_block_iosched :file relabelfrom;
+
+allow init {
+    firmware_file
+    fsg_file
+    oemfs
+    persist_file
+}:dir mounton;

@@ -1,0 +1,21 @@
+# Grant access to Qualcomm MSM Interface (QMI) radio sockets to system services
+# (e.g., LocationManager)
+qmux_socket(system_server)
+
+allow system_server mpdecision_socket:dir r_dir_perms;
+unix_socket_send(system_server, mpdecision, mpdecision)
+
+unix_socket_connect(system_server, sensors, sensors)
+allow system_server sensors_socket:sock_file r_file_perms;
+allow system_server sensors_device:chr_file getattr;
+
+allow system_server persist_file:dir search;
+
+#kgsl
+r_dir_file(system_server, kgsl_debugfs);
+
+# whitelist qualcomm specific ioctls
+allow system_server self:socket ioctl;
+allowxperm system_server self:socket ioctl msm_sock_ipc_ioctls;
+
+allow system_server sysfs_graphics:file w_file_perms;
